@@ -65,7 +65,7 @@ const App = ({ selector, options }) => {
   const { image } = state;
   return (
     <div className="afu__root">
-      <div className="afu__wrap">
+      <div className={image ? 'afu__wrap-upload' : 'afu__wrap'}>
         {image ? (
           <Image src={image} options={options} />
         ) : (
