@@ -69,5 +69,3 @@ export function init(selector, options = defaultOptions) {
   workArea.addEventListener('dragleave', (ev) => unHighlight(wrapper, ev.type));
   workArea.addEventListener('drop', (ev) => unHighlight(ev, wrapper));
 }
-
-init(document.getElementById('upload'));
