@@ -6,6 +6,7 @@ import imageStore from './sore';
 import './scss/main.scss';
 import { UPLOADS, DEFAULT_CLASS_NAME } from './const';
 import { App } from './components';
+import { highlight, unHighlight } from './upload';
 
 const className = DEFAULT_CLASS_NAME;
 const store = createStore(imageStore);
@@ -14,9 +15,9 @@ export const defaultOptions = {
   btnTitle: 'Browse Files',
 };
 
-function upload(input) {
+export function uploadFile(files) {
   var reader = new FileReader();
-  reader.readAsDataURL(input.files[0]);
+  reader.readAsDataURL(files[0]);
 
   reader.onload = function () {
     store.dispatch({ type: UPLOADS, image: reader.result });
@@ -26,7 +27,7 @@ function upload(input) {
   };
 }
 
-export function uploadFile(selector, options = defaultOptions) {
+export function init(selector, options = defaultOptions) {
   const content = (
     <Provider store={store}>
       <App selector={selector} value={store.getState()} />
@@ -52,12 +53,21 @@ export function uploadFile(selector, options = defaultOptions) {
   store.subscribe(render);
   wrapper.appendChild(selector);
   selector.setAttribute('accept', 'image/x-png,image/gif,image/jpeg');
-  selector.addEventListener('change', (event) => upload(event.target));
+  selector.addEventListener('change', (event) =>
+    uploadFile(event.target.files)
+  );
 
   document.addEventListener('drop', (ev) => ev.preventDefault());
   document.addEventListener('dragleave', (ev) => ev.preventDefault());
   document.addEventListener('dragenter', (ev) => ev.preventDefault());
   document.addEventListener('dragover', (ev) => ev.preventDefault());
+
+  const workArea = wrapper.querySelector('.afu__work-area');
+
+  workArea.addEventListener('dragenter', () => highlight(wrapper));
+  workArea.addEventListener('dragover', () => highlight(wrapper));
+  workArea.addEventListener('dragleave', (ev) => unHighlight(wrapper, ev.type));
+  workArea.addEventListener('drop', (ev) => unHighlight(ev, wrapper));
 }
 
-uploadFile(document.getElementById('upload'));
+init(document.getElementById('upload'));

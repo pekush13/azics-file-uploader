@@ -52,3 +52,9 @@ $border-radius: 8px;
     display: none;
   }
 }
+
+.azics-file-uploader.afu__dragover {
+  .afu__work-area {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
