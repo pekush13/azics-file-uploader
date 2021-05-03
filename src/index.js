@@ -5,9 +5,14 @@ import { Provider } from 'react-redux';
 import imageStore from './sore';
 import './scss/main.scss';
 import { UPLOADS, DEFAULT_CLASS_NAME } from './const';
+import { App } from './components';
 
 const className = DEFAULT_CLASS_NAME;
 const store = createStore(imageStore);
+export const defaultOptions = {
+  caption: 'Drag&Drop files here <br /> or',
+  btnTitle: 'Browse Files',
+};
 
 function upload(input) {
   var reader = new FileReader();
@@ -15,55 +20,11 @@ function upload(input) {
 
   reader.onload = function () {
     store.dispatch({ type: UPLOADS, image: reader.result });
-    // console.log(reader.result); //base64encoded string
   };
   reader.onerror = function (error) {
     console.log('Error: ', error);
   };
 }
-
-const Input = ({ selector, options }) => (
-  <div className="afu__work-area">
-    <i className="afu__icon"></i>
-    <div className="afu__text">
-      <p
-        dangerouslySetInnerHTML={{
-          __html: options.caption || defaultOptions.caption,
-        }}
-      ></p>
-    </div>
-    <button className="afu__button" onClick={() => selector.click()}>
-      {options.btnTitle || defaultOptions.btnTitle}
-    </button>
-  </div>
-);
-
-const Image = ({ src, options }) => (
-  <div>
-    <img src={src} style={{ ...options }}></img>
-  </div>
-);
-
-const App = ({ selector, value, options }) => {
-  const state = value;
-  const { image } = state;
-  return (
-    <div className="afu__root">
-      <div className={image ? 'afu__wrap-upload' : 'afu__wrap'}>
-        {image ? (
-          <Image src={image} options={options} />
-        ) : (
-          <Input selector={selector} options={options} />
-        )}
-      </div>
-    </div>
-  );
-};
-
-const defaultOptions = {
-  caption: 'Drag&Drop files here <br /> or',
-  btnTitle: 'Browse Files',
-};
 
 export function uploadFile(selector, options = defaultOptions) {
   const content = (
