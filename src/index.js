@@ -53,6 +53,11 @@ export function uploadFile(selector, options = defaultOptions) {
   wrapper.appendChild(selector);
   selector.setAttribute('accept', 'image/x-png,image/gif,image/jpeg');
   selector.addEventListener('change', (event) => upload(event.target));
+
+  document.addEventListener('drop', (ev) => ev.preventDefault());
+  document.addEventListener('dragleave', (ev) => ev.preventDefault());
+  document.addEventListener('dragenter', (ev) => ev.preventDefault());
+  document.addEventListener('dragover', (ev) => ev.preventDefault());
 }
 
 uploadFile(document.getElementById('upload'));
