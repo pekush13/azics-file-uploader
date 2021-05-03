@@ -10,6 +10,7 @@ const UPLOADS = 'UPLOADS';
 
 const defaultState = {
   image: false,
+  options: {},
 };
 
 function imageStore(state = defaultState, action) {
@@ -41,8 +42,9 @@ const Input = ({ selector }) => (
   <div className="afu__work-area">
     <i className="afu__icon"></i>
     <div className="afu__text">
-      <p>Drag&Drop files here</p>
-      <p>or</p>
+      <p>
+        Drag&Drop files here <br /> or
+      </p>
     </div>
     <button className="afu__button" onClick={() => selector.click()}>
       Browse Files
@@ -69,15 +71,6 @@ const App = ({ selector, value }) => {
   );
 };
 
-function render(wrapper, selector) {
-  ReactDOM.render(
-    <Provider store={store}>
-      <App selector={selector} value={store.getState()} />
-    </Provider>,
-    wrapper
-  );
-}
-
 export function uploadFile(selector) {
   const content = (
     <Provider store={store}>
@@ -92,9 +85,16 @@ export function uploadFile(selector) {
   const wrapper = document.createElement('DIV');
   wrapper.classList.add(className);
   selector.parentNode.insertBefore(wrapper, selector);
-
-  render(wrapper, selector);
-  store.subscribe(() => render(wrapper, selector));
+  const render = () => {
+    ReactDOM.render(
+      <Provider store={store}>
+        <App selector={selector} value={store.getState()} />
+      </Provider>,
+      wrapper
+    );
+  };
+  render();
+  store.subscribe(render);
   wrapper.appendChild(selector);
   selector.setAttribute('accept', 'image/x-png,image/gif,image/jpeg');
   selector.addEventListener('change', (event) => upload(event.target));
