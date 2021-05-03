@@ -7,10 +7,10 @@ import './scss/main.scss';
 const className = 'azics-file-uploader';
 
 const UPLOADS = 'UPLOADS';
+const SET_OPTIONS = 'SET_OPTIONS';
 
 const defaultState = {
   image: false,
-  options: {},
 };
 
 function imageStore(state = defaultState, action) {
@@ -38,40 +38,50 @@ function upload(input) {
   };
 }
 
-const Input = ({ selector }) => (
+const Input = ({ selector, options }) => (
   <div className="afu__work-area">
     <i className="afu__icon"></i>
     <div className="afu__text">
-      <p>
-        Drag&Drop files here <br /> or
-      </p>
+      <p
+        dangerouslySetInnerHTML={{
+          __html: options.caption || defaultOptions.caption,
+        }}
+      ></p>
     </div>
     <button className="afu__button" onClick={() => selector.click()}>
-      Browse Files
+      {options.btnTitle || defaultOptions.btnTitle}
     </button>
   </div>
 );
 
-const Image = ({ src }) => (
+const Image = ({ src, options }) => (
   <div>
     <img src={src}></img>
   </div>
 );
 
-const App = ({ selector, value }) => {
-  console.log(1);
-  const state = value;
+const App = ({ selector, options }) => {
+  const state = store.getState();
   const { image } = state;
   return (
     <div className="afu__root">
       <div className="afu__wrap">
-        {image ? <Image src={image} /> : <Input selector={selector} />}
+        {image ? (
+          <Image src={image} options={options} />
+        ) : (
+          <Input selector={selector} options={options} />
+        )}
       </div>
     </div>
   );
 };
 
-export function uploadFile(selector) {
+const defaultOptions = {
+  caption: 'Drag&Drop files here <br /> or',
+  btnTitle: 'Browse Files',
+};
+
+export function uploadFile(selector, options = defaultOptions) {
   const content = (
     <Provider store={store}>
       <App selector={selector} value={store.getState()} />
@@ -88,7 +98,7 @@ export function uploadFile(selector) {
   const render = () => {
     ReactDOM.render(
       <Provider store={store}>
-        <App selector={selector} value={store.getState()} />
+        <App selector={selector} options={options} />
       </Provider>,
       wrapper
     );
