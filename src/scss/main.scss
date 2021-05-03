@@ -46,4 +46,8 @@ $border-radius: 8px;
   .afu__button:hover {
     opacity: 0.8;
   }
+
+  > input[type='file'] {
+    display: none;
+  }
 }
