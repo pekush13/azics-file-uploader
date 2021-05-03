@@ -56,7 +56,7 @@ const Input = ({ selector, options }) => (
 
 const Image = ({ src, options }) => (
   <div>
-    <img src={src}></img>
+    <img src={src} style={{ ...options }}></img>
   </div>
 );
 
