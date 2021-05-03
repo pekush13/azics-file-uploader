@@ -2,27 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
+import imageStore from './sore';
 import './scss/main.scss';
+import { UPLOADS, DEFAULT_CLASS_NAME } from './const';
 
-const className = 'azics-file-uploader';
-
-const UPLOADS = 'UPLOADS';
-const SET_OPTIONS = 'SET_OPTIONS';
-
-const defaultState = {
-  image: false,
-};
-
-function imageStore(state = defaultState, action) {
-  console.log(action);
-  switch (action.type) {
-    case UPLOADS:
-      return { ...state, image: action.image };
-    default:
-      return state;
-  }
-}
-
+const className = DEFAULT_CLASS_NAME;
 const store = createStore(imageStore);
 
 function upload(input) {
@@ -60,8 +44,8 @@ const Image = ({ src, options }) => (
   </div>
 );
 
-const App = ({ selector, options }) => {
-  const state = store.getState();
+const App = ({ selector, value, options }) => {
+  const state = value;
   const { image } = state;
   return (
     <div className="afu__root">
@@ -98,7 +82,7 @@ export function uploadFile(selector, options = defaultOptions) {
   const render = () => {
     ReactDOM.render(
       <Provider store={store}>
-        <App selector={selector} options={options} />
+        <App selector={selector} value={store.getState()} options={options} />
       </Provider>,
       wrapper
     );
