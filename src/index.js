@@ -66,6 +66,6 @@ export function init(selector, options = defaultOptions) {
 
   workArea.addEventListener('dragenter', () => highlight(wrapper));
   workArea.addEventListener('dragover', () => highlight(wrapper));
-  workArea.addEventListener('dragleave', (ev) => unHighlight(wrapper, ev.type));
+  workArea.addEventListener('dragleave', (ev) => unHighlight(ev, wrapper));
   workArea.addEventListener('drop', (ev) => unHighlight(ev, wrapper));
 }
