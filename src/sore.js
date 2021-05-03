@@ -5,7 +5,6 @@ const defaultState = {
 };
 
 function imageStore(state = defaultState, action) {
-  console.log(action);
   switch (action.type) {
     case UPLOADS:
       return { ...state, image: action.image };
