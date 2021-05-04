@@ -4,7 +4,7 @@
 
 Drag and file uploader
 
-## example
+## Usage
 
 ```html
 <input type="file" id="myFile" />
