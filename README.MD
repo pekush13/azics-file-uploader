@@ -14,4 +14,4 @@ Drag and file uploader
 </script>
 ```
 
-More details [here]: https://github.com/pekush13/azics-file-uploader/examples
+More details: http://github.com/pekush13/azics-file-uploader/tree/main/examples
