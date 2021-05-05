@@ -16,6 +16,6 @@ Drag and file uploader
 
 More details: http://github.com/pekush13/azics-file-uploader/tree/main/examples
 
-## Eample
+## Example
 
 here: https://pekush13.github.io/azics-file-uploader/examples/
